@@ -26,9 +26,9 @@
 %================================= TITLE PAGE ===================================
 %================================================================================
 
-\title{Projektplan Team X}
+\title{Projektplan Flying Circus}
 \subtitle{Projektpraktikum Informationsverarbeitung}
-\author{Tobias Eden, Lorenz Kenndorf, Adam Ivankay, Fabian Kluge}
+\author{Tobias Eden, Lorenz Kenndorf, Adam Ivankay, Thomas Riethorst}
 
 \date{\today}
 
@@ -69,20 +69,26 @@ Ein wichtiger Aspekt ist auch der  Konkurrenzkampf mit dem anderen Team, da dies
 \subsection*{Zielsetzung}
 In dem dreimonatigen Projektpraktikum soll ein Luftschiff konstruiert werden, welches autonom einen vordefinierten Hindernis-Parcours abfliegt und an einer markierten Stelle ein Rettungspaket abwirft. Dazu müssen folgende Kriterien und Aufgaben eingehalten werden:
 
--Das Team hat während der Mission keinen Zugriff auf das Steuerungssystem des Luftschiffes 
--Das Luftschiff soll ein Rettungspaket an einer zuvor definierten Position abwerfen
--Das Luftschiff darf während der gesamten Mission nicht höher als 2m und tiefer als 0,5m fliegen
--Die Dauer eines Durchlaufs zum Absolvieren der Mission beträgt maximal 15 Minuten, wobei zwei Durchgänge erlaubt sind
--Sowohl die Gondel, als auch der Ballon dürfen Hindernisse im Raum nicht berühren
+\begin{itemize}
+\item Das Team hat während der Mission keinen Zugriff auf das Steuerungssystem des Luftschiffes 
+\item Das Luftschiff soll ein Rettungspaket an einer zuvor definierten Position abwerfen
+\item Das Luftschiff darf während der gesamten Mission nicht höher als 2m und tiefer als 0,5m fliegen
+\item Die Dauer eines Durchlaufs zum Absolvieren der Mission beträgt maximal 15 Minuten, wobei zwei Durchgänge erlaubt sind
+\item Sowohl die Gondel, als auch der Ballon dürfen Hindernisse im Raum nicht berühren
+\end{itemize}
 
 Bei der Entwicklung des Luftschiffes sind Umwelteinflüsse, wie Luftzug, IR-Störung, Helligkeits- und Temperaturänderungen zu beachten. Zusätzlich ist eine gewisse Toleranz in der Tragkraft des Zeppelinballons zu berücksichtigen.
 
 \subsection*{Ansatz}
 Unser Team hat sich für einen Ansatz mit drei Motoren entschieden, einen zur Höhenregelung und zwei für die Ausrichtung um die Gierachse. Das Grundgerüst der Gondel soll aus Carbonstangen gefertigt werden, woran der Ausleger für die Motoren befestigt wird. Verwendet wird ein IMU-Board zum Messen von Höhe, Luftdruck, Magnetfeld und Richtung; drei Motortreiber zur Steuerung und das Arduino-Board zur Berechnung der Steuerbefehle.
 
-Für das Projekt stehen uns die Dokumentationen der letztjährigen Teams zur Verfügung, sowie das über die Jahre entwickelte Indoor-Positioning-System (IPS).
 
 Das Gesamtkonzept sieht vor, die Wegfindung am PC zu berechnen. Die aktuellen Positionsdaten sowie die nächsten anzufliegenden Wegpunkte werden am PC berechnet und dann zum Arduino übertragen. Am Arduino wird dann durch die Regelsoftware die notwendige Kursänderung berechnet, die notwendig ist, um den nächsten Wegpunkt, ausgehend von der aktuellen Position, anzufliegen.
+
+
+Für das Projekt stehen uns die Dokumentationen der letztjährigen Teams zur Verfügung, sowie das über die Jahre entwickelte Indoor-Positioning-System (IPS).
+
+
 \subsection*{Erfolgskriterien}
 
 \section{Projektumfang und Meilensteine}
