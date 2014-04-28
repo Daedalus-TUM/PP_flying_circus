@@ -89,31 +89,27 @@ Das Gesamtkonzept sieht vor, die Wegfindung am PC zu berechnen. Die aktuellen Po
 Für das Projekt stehen uns die Dokumentationen der letztjährigen Teams zur Verfügung, sowie das über die Jahre entwickelte Indoor-Positioning-System (IPS).
 
 
-\subsection*{Erfolgskriterien}
-
-
-
+\newpage
 \section{Projektumfang und Meilensteine}
-Um eine zuverlässige Kontrolle des Projektfortschritts zu ermöglichen, sollen hier Meilensteine auf dem Weg zum vollendeten Luftschiff definiert werden sowie die zum Erreichen dieser Meilensteine notwendigen Kriterien.
+Um eine zuverlässige Kontrolle des Projektfortschritts zu ermöglichen, sollen hier Meilensteine auf dem Weg zum vollendeten Luftschiff definiert werden, sowie die zum Erreichen dieser Meilensteine notwendigen Kriterien.
 
 \begin{itemize}
-	\item \textbf{Meilenstein Gondelhardware}
+	\item \textbf{Meilenstein Gondelhardware:} Datum: 13.05.2014
 		\begin{itemize}
 			\item Gondelskelett konstruiert
 			\item Bauteile eingebaut und angeschlossen
-			\item Ungesteuerter Geradeausflug absolviert
 		\end{itemize}
-	\item \textbf{Meilenstein Funkverbindung}
+	\item \textbf{Meilenstein Funkverbindung:} Datum: 20.05.2014
 		\begin{itemize}
 			\item Funkverbindung Gondel - PC hergestellt
 			\item Manueller gesteuerter Flug absolviert
 		\end{itemize}
-	\item \textbf{Meilenstein Höhenregelung}
+	\item \textbf{Meilenstein Höhenregelung:} Datum: 27.05.2014
 		\begin{itemize}
 			\item Funktionierende Höhenregelung
-			\item Ungesteuerter Geradeausflug absolviert
+			\item Schwebeflug absolviert
 		\end{itemize}
-	\item \textbf{Meilenstein Autonomer Testflug}
+	\item \textbf{Meilenstein Autonomer Flug:} Datum 10.06.2014
 		\begin{itemize}
 			\item IPS einsatzbereit
 			\item Wegfindungsalgorithmus erstellt
@@ -134,11 +130,35 @@ Das Team hat sich primär für einen Antrieb mit drei Motoren entschieden, zwei 
 \subsection*{Sensoren}
 Das IMU-Board wird, um möglichst störungsfreie Daten zu erhalten, auf der Oberseite des Ballons befestigt. Dadurch können wir die Einflüsse der Magnetfelder der Gleichstrommotoren so gering wie möglich halten. Welche Messdaten verwendet werden können, muss experimentell ermittelt werden. Im Grunde gilt, mit dem Konzept der zwei Ultraschall-Sender auf dem Ausleger lässt sich im Prinzip das IMU-Board einsparen, da es zwei Punkte der Gondel positioniert, und dadurch die Ausrichtung des Ballons auch bestimmt werden kann. Es wird trotzdem verwendet, um mehrere Daten für Höhe, Richtung und Beschleunigung zu erhalten. Des weiteren wird ein Ultraschallsensor zur Höhenmessung eingesetzt.
 \subsection*{Funkverbindung}
-Um eine Funkverbindung mit dem PC zu erhalten, wird ein nRF-Modul verwendet. Über diese Kommunikationsverbindung werden dann die Koordinaten von der Basisstation an den Ballon übertragen. Für Tests können damit auch manuelle Steuerungen übernommen werden. Zusätzlich können vom Ballon verschiedene Statuswerte an den PC übertragen werden.
+Um eine Funkverbindung mit dem PC zu erhalten, wird ein XBEE-Modul verwendet. Über diese Kommunikationsverbindung werden dann die Koordinaten von der Basisstation an den Ballon übertragen. Für Tests können damit auch manuelle Steuerungen übernommen werden. Zusätzlich können vom Ballon verschiedene Statuswerte an den PC übertragen werden.
 \subsection*{Abwurfmechanismus}
 Als Abwurfmechanismus wird ein Transistor zum Durchbrennen eines Drahtes zum Lösen des Pakets verwendet. Die Dicke des Drahtes sowie der benötigte Strom zum Durchbrennen müssen experimentell ermittelt werden. Bei Erreichen der Koordinaten der Abwurfstelle wird die Software im Arduino einen Transistor ansteuern, der dann den dünnen Draht kurzschließt und ihn somit durchbrennt. Dadurch wird das Paket abgeworfen.
 \subsection*{Stromversorgung}
 Der Akku wird aus zwei Zellen in Serie mit jeweils 3,7V, also insgesamt 7,4V, bestehen. Die Motoren sowie die Ultraschallsender können mit dieser Spannung umgehen. Für die restliche Elektronik werden noch entsprechende Spannungswandler (Schaltregler) für die Spannungen 5V und 3,3V benötigt.
+\subsection*{Erweiterung des IPS}
+Das IPS soll in einem neuartigen Ansatz betrachtet werden. Da es bei den vorherigen Teams immer wieder zu den Problemen einer genauen Positionsbestimmung sowie Orientierungsbestimmung des Ballons gekommen ist, haben wir hier folgenden Ansatz gewählt.
+Durch Erweiterung des IPS um die Funktion eines zweiten Senders, soll eine genauere Bestimmung der Position des Ballons ermöglicht werden. Es werden am Ballon zwei Ultraschallsender jeweils an einem Ende des Auslegers montiert. Diese werden dann abwechselnd, entsprechend den Intervallen des IPS, senden. Dadurch kann die Basisstation zwei Objekte lokalisieren. Die IPS-Software muss entsprechend angepasst werden, sodass die Signale beider Sender getrennt empfangen werden kann.
+
+Durch diese Methode und den geometrischen Eigenschaften der Anordnung der Sender (Abstand zueinander, waagrechte Lage, usw.), erhoffen wir uns somit eine genauere Bestimmung der Position des Ballons. Auch soll es uns dadurch möglich sein, die Orientierung des Ballons berechnen zu können. Diese Werte können dann unterstützend, bzw. sogar ersetzend für das IMU-Board dienen.
+
+
+Zusätzlich werden weitere IPS-Bodenstationen aufgebaut, um eine bessere Abdeckung zu erreichen. Auch die Neuentwicklung bzw. Verbesserung der Bodenstationen durch gerichtete Ultraschallsensoren wird im Zuge des Projekts getestet und validiert.
+
+
+\subsection*{Software-Architektur}
+Auf der Basisstation werden ankommende IPS-Messdaten gefiltert und ausgewertet sodass dem Luftschiff eine Position in einem globalen Koordinatensystem bezüglich der Basisstation zugeordnet werden kann.
+
+Diese Position wird dann vom Wegfindungsalgorithmus verwendet um einen Kurs festzulegen. Sobald die Positionen des Luftschiffes sowie eines zunächst anzusteuernden Wegpunktes in das Koordinatensystem des Luftschiffes umgerechnet sind, werden diese per Funk an das Luftschiff übertragen.
+
+
+\includegraphics[scale=0.5]{Software}
+
+
+Seitens des Luftschiffes kann nun die Regelung der Motoren aus den von der Basisstation gelieferten Daten sowie der Daten des IMU-Board und Ultraschallsensors stattfinden.
+
+Der Befehl zum Abwurf des Pakets wird von der Basisstation ausgegeben sobald das Luftschiff die Abwurfzone erreicht hat.
+
+
 \subsection*{Navigation und Wegfindung}
 Aufbauend auf den Positionsdaten des IPS wird auf der Basisstation der optimale Weg durch den Hindernisparcours berechnet. Um Kollisionen mit den Hindernissen zu vermeiden wird ein Sicherheitsabstand um die Hindernisse festgelegt, welcher ungefähr dem doppelten Ballonradius entspricht. Die vollständige Flugroute des Luftschiffes im Slalom um die Hindernisse ergibt sich dann aus Kreissegmenten dieser Radien, welche tangential miteinander verbunden werden.
 
@@ -154,22 +174,18 @@ Alle zur Regelung notwendigen Berechnungen werden vom auf der Gondel installiert
 Bei der Erstellung der Regelung muss darauf geachtet werden, dass das Regelungssystem Umwelteinflüsse wie Zugluft, Druckänderung sowie das durch den einzelnen Höhenregelungsmotor auftretende Drehmoment ausgleichen kann. Weiterhin muss vor allem die Höhenregelung auf den Verlust von ca.1g Gewicht durch Abwurf des Paketes während des Fluges ausgelegt sein.
 
 
-\subsection*{Erweiterung des IPS}
-Beim IPS haben wir uns für einen erweiterten Ansatz entschieden. Da es bei den vorherigen Teams immer wieder zu den Problemen einer genauen Positionsbestimmung sowie Orientierungsbestimmung des Ballons gekommen ist, haben wir hier folgenden Ansatz gewählt.
-Durch Erweiterung des IPS um die Funktion eines zweiten Senders/Objekts, erhoffen wir uns eine genauere Bestimmung der Position des Ballons. Es werden am Ballon zwei Ultraschallsender jeweils an einem Ende des Auslegers montiert. Diese werden dann abwechselnd, entsprechend den Intervallen des IPS, senden. Dadurch kann die Basisstation zwei Objekte lokalisieren. Die IPS-Software muss entsprechend angepasst werden, sodass die Signale beider Sender getrennt empfangen werden kann.
-
-Durch diese Methode und den geometrischen Eigenschaften der Anordnung der Sender (Abstand zueinander, waagrechte Lage, usw.), erhoffen wir uns somit eine genauere Bestimmung der Position des Ballons. Auch soll es uns dadurch möglich sein, die Orientierung des Ballons berechnen zu können. Diese Werte können dann unterstützend, bzw. sogar ersetzend für das IMU-Board dienen.
 
 
-Zusätzlich werden weitere IPS-Bodenstationen aufgebaut, um eine bessere Abdeckung zu erreichen. Auch die Neuentwicklung bzw. Verbesserung der Bodenstationen durch gerichtete Ultraschallsensoren wird im Zuge des Projekts getestet und validiert.
 
-
-\section{Aufwandsabschätzung / Zeitplan}
+\section{Zeitplan}
 
 \includegraphics[scale=0.5]{Zeitplan-Arbeitspakete}
 
-Wie die Grafik darstellt, werden in den ersten drei Wochen zunächst die Arbeitspakete, welche sich mit der Implementierung der Hardware befassen, bearbeitet. Die darauffolgenden drei Wochen werden zur Entwicklung der Steuersoftware sowie dem Testen der Software auf der Hardware verwendet. Während der letzten vier Wochen wird schließlich die Funktionsfähigkeit des Luftschiffes in einem Kreislauf von Test und Optimierung vollendet.
 
+Wie die Grafik darstellt, wird in den ersten fünf Wochen ein Prototyp hergestellt, welcher bereits alle notwendigen Funktionen beinhaltet. Die oben definierten Meilensteine sind in blau hervorgehoben.
+
+
+\includegraphics[scale=0.5]{Zeitplan-Arbeitspakete2}
 
 \section{Material- und Kostenplanung}
 
@@ -178,18 +194,20 @@ Die im Bau der Gondel verwendete Hardware (vgl. Absatz „Aufbau des Grundgerüs
 Links \= Mitte \= Rechts \= rechtser \= rechtester \kill
 Bauteil		\>\>\>\>		Kosten in Euro\\
 ==================================\\
-Motoren:\>\>\>	\>			10\\
-XBEE:	\>\>	\>\>		20\\
+Motoren:\>\>\>	\>			30\\
+XBEE:	\>\>	\>\>		25\\
 Motorentreiber:	\>\>\>\>	10\\
-Propeller:		\>\>\>\>	4\\
-Carbonstangen:	\>\>\>\>	6\\
+Propeller:		\>\>\>\>	5\\
+Ultraschallsensor:\>\>\>\>  15\\
+Spannungswandler:\>\>\>\>   5\\
+Carbonstangen:	\>\>\>\>	5\\
 Kleber:	\>\>	\>\>		vorhanden\\
 Kabel/Lackdraht:\>\>\>\>	vorhanden\\
 Arduino-Board:	\>\>\>\>	vorhanden\\
 ==================================\\
-Summe:			\>\>\>\>	55\\
+Summe:			\>\>\>\>	95\\
 \end{tabbing}
-Für die Motoren und Propeller sind hier bereits Ersatzteile im Preis einkalkuliert. 
+Für die Motoren und Propeller sind hier bereits Ersatzteile im Preis einkalkuliert. Die XBEE Funkmodule werden gemeinsam mit dem anderen Team verwendet.
 
 \section{Risikoanalyse}
 
@@ -204,6 +222,8 @@ Hinzu kommt noch, dass bei jedem Arbeitspaket Komplikationen auftreten können, 
 
 Möglich, aber unwahrscheinlich ist, dass das vorgesehene Budget auf Grund von Beschädigung der Bauelemente nicht ausreicht; in dem Fall muss das Team mit dem Projektleiter konsultieren.
 
+\section{Documentation}
+Das Projekt wird während der Entwicklung laufend dokumentiert. Als Plattform für den Austausch von Dokumenten wird Github verwendet. Zum Abschluss des Praktikums wird ein umfassender Artikel zur Dokumentation unserer Ergebnisse auf dem Daedalus-Wiki veröffentlicht.
 
 \section{Änderungen des Projektablaufes}
 Alle auftretenden Änderungen dieses Projektplanes werden beispielsweise in einer Tabelle kurz notiert um Abweichungen und ggf. Änderungen des geplanten Ziels nachvollziehen zu können.
