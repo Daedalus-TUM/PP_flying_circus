@@ -28,7 +28,7 @@
 
 \title{Projektplan Flying Circus}
 \subtitle{Projektpraktikum Informationsverarbeitung}
-\author{Tobias Eden, Lorenz Kenndorf, Adam Ivankay, Thomas Riethorst}
+\author{Tobias Eden, Lorenz Kenndoff, Adam Ivankay, Thomas Riethorst}
 
 \date{\today}
 
@@ -80,7 +80,7 @@ In dem dreimonatigen Projektpraktikum soll ein Luftschiff konstruiert werden, we
 Bei der Entwicklung des Luftschiffes sind Umwelteinflüsse, wie Luftzug, IR-Störung, Helligkeits- und Temperaturänderungen zu beachten. Zusätzlich ist eine gewisse Toleranz in der Tragkraft des Zeppelinballons zu berücksichtigen.
 
 \subsection*{Ansatz}
-Unser Team hat sich für einen Ansatz mit drei Motoren entschieden, einen zur Höhenregelung und zwei für die Ausrichtung um die Gierachse. Das Grundgerüst der Gondel soll aus Carbonstangen gefertigt werden, woran der Ausleger für die Motoren befestigt wird. Verwendet wird ein IMU-Board zum Messen von Höhe, Luftdruck, Magnetfeld und Richtung; drei Motortreiber zur Steuerung und das Arduino-Board zur Berechnung der Steuerbefehle.
+Unser Team hat sich für einen Ansatz mit drei Motoren entschieden, einen zur Höhenregelung und zwei für die Ausrichtung um die Gierachse. Das Grundgerüst der Gondel soll aus Carbonstangen gefertigt werden, woran der Ausleger für die Motoren befestigt wird. Verwendet wird ein IMU-Board zum Messen von Höhe, Luftdruck, Magnetfeld und Richtung; drei Motortreiber zur Steuerung und das Arduino-Board zur Berechnung der Steuerbefehle. Ein den Projektangaben entsprechendes Paket kann abgeworfen werden,  indem der haltende Draht kurzgeschlossen und somit durchgeschmolzen wird.
 
 
 Das Gesamtkonzept sieht vor, die Wegfindung am PC zu berechnen. Die aktuellen Positionsdaten sowie die nächsten anzufliegenden Wegpunkte werden am PC berechnet und dann zum Arduino übertragen. Am Arduino wird dann durch die Regelsoftware die notwendige Kursänderung berechnet, die notwendig ist, um den nächsten Wegpunkt, ausgehend von der aktuellen Position, anzufliegen.
@@ -91,81 +91,34 @@ Für das Projekt stehen uns die Dokumentationen der letztjährigen Teams zur Ver
 
 \subsection*{Erfolgskriterien}
 
-\section{Projektumfang und Meilensteine}
 
+
+\section{Projektumfang und Meilensteine}
+Um eine zuverlässige Kontrolle des Projektfortschritts zu ermöglichen, sollen hier Meilensteine auf dem Weg zum vollendeten Luftschiff definiert werden sowie die zum Erreichen dieser Meilensteine notwendigen Kriterien.
 
 \begin{itemize}
-	\item \textbf{Recherche und Planung}
+	\item \textbf{Meilenstein Gondelhardware}
 		\begin{itemize}
-			\item \textbf{Kostenplanung}
-			\item \textbf{Einarbeitung in das Themengebiet}
-			\item \textbf{Materialbestellung}
+			\item Gondelskelett konstruiert
+			\item Bauteile eingebaut und angeschlossen
+			\item Ungesteuerter Geradeausflug absolviert
 		\end{itemize}
-		
-	\item \textbf{Grundgerüst}
+	\item \textbf{Meilenstein Funkverbindung}
 		\begin{itemize}
-			\item \textbf{Design} Planung der Bauweise unter Berücksichtigung des Schwerpunktes
-			\item \textbf{Konstruktion} Installation der Bauteile
+			\item Funkverbindung Gondel - PC hergestellt
+			\item Manueller gesteuerter Flug absolviert
 		\end{itemize}
-		
-	\item \textbf{Motoren und Motortreiber} 
+	\item \textbf{Meilenstein Höhenregelung}
 		\begin{itemize}
-			\item \textbf{Installation} der Motoren und Motortreiber
-			\item \textbf{Verbindung} mit Arduino und Stromversorgung
+			\item Funktionierende Höhenregelung
+			\item Ungesteuerter Geradeausflug absolviert
 		\end{itemize}
-		
-	\item \textbf{Erweiterung des IPS}  
+	\item \textbf{Meilenstein Autonomer Testflug}
 		\begin{itemize}
-			\item \textbf{Software} für Doppelsender konfigurieren
-			\item \textbf{Testen} der Funktionalität des Konzeptes
-			\item \textbf{Hardware} Konstruktion weiterer Bodenstationen
-		\end{itemize}
-		
-	\item \textbf{Sensoren}
-		\begin{itemize}
-			\item \textbf{IPS} Sender installieren
-			\item \textbf{Auswertung} der Genauigkeit der Messdaten
-			\item \textbf{Optimierung} durch Filterung
-		\end{itemize}
-		
-	\item \textbf{Funkverbindung}
-		\begin{itemize}
-		
-			\item \textbf{Installation} des XBEE-Moduls
-			\item \textbf{Test} der Funkverbindung
-		\end{itemize}
-		
-	\item \textbf{Abwurfmechanismus}
-		\begin{itemize}
-			\item \textbf{Installation} der Schaltung
-			\item \textbf{Test} Bestimmung von Drahtdicke und -länge auf experimentelle Weise
-		\end{itemize}
-
-	\item \textbf{Navigation und Wegfindung}  
-		\begin{itemize}
-			\item \textbf{Auswertung der Messdaten}
-			\item \textbf{Positionsberechnung}
-			\item \textbf{Wegfindungsalgorithmus}
-			\item \textbf{Bestimmung} der Wegpunkte
-			\item \textbf{Umrechnung} auf Koordinatensystem der Gondel
-			
-		\end{itemize}
-		
-	\item \textbf{Regelung}  
-		\begin{itemize}
-			\item \textbf{Entwurf} der Höhenregelungs- und Richtungsregelungsalgorithmen
-			\item \textbf{Test} Experimentelle Bestimmung der Toleranzbereiche
-			\item \textbf{Umwelteinflüsse kompensieren}
-		\end{itemize}
-	
-	\item \textbf{Dokumentation} Festhalten des Projektfortschrittes pro Arbeitspaket
-		\begin{itemize}
-			\item \textbf{Materialliste}
-			\item \textbf{Softwarecode} mit ausführlichen Kommentaren
-			\item \textbf{Probleme und Lösungen}
-			\item \textbf{Bilder}
-			\item \textbf{Anleitung} Navigationssystem, Luftschiffflug
-			\item \textbf{Quellenangaben}
+			\item IPS einsatzbereit
+			\item Wegfindungsalgorithmus erstellt
+			\item Funktionierende Richtungsregelung
+			\item Autonom gesteuerter Testflug absolviert
 		\end{itemize}
 \end{itemize}
 
@@ -173,7 +126,7 @@ Für das Projekt stehen uns die Dokumentationen der letztjährigen Teams zur Ver
 
 \subsection*{Grundgerüst}
 Das Grundgerüst dient der exakten Befestigung aller Komponenten der Gondel.\\
-Als Aufbau unseres Grundgerüsts haben wir uns für einen Skelettaufbau aus Carbonstangen entschieden. Die Stift-/Buchsenleisten werden entsprechend mit den Carbonstangen per Epoxidklebstoff verklebt, um so ein stabiles und dennoch sehr leichtes Grundgerüst für die Gondel zu erhalten. Der Großteil der Elektronik kann somit einfach aufgesteckt und bei Bedarf getauscht werden, sollten Defekte auftreten. Die zwei Motoren zur Richtungsregelung werden an einem Ausleger aus Carbon fixiert, der eine ungefähre Länge von 50cm aufweisen wird. 
+Als Aufbau unseres Grundgerüsts haben wir uns für einen Skelettaufbau aus Carbonstangen entschieden. Die Stift-/Buchsenleisten werden entsprechend mit den Carbonstangen per Epoxidklebstoff verklebt, um so ein stabiles und dennoch sehr leichtes Grundgerüst für die Gondel zu erhalten. Der Großteil der Elektronik kann somit einfach aufgesteckt und bei Bedarf getauscht werden, sollten Defekte auftreten. Die zwei Motoren zur Richtungsregelung werden an einem Ausleger aus Carbon fixiert.
 
 Die Ultraschall-Sender für das IPS werden jeweils am Ende des Carbonauslegers montiert. Der Infrarotsender wird mittig positioniert. Der Motor zur Höhenregelung wird mittig auf einem kurzen Carbonausleger platziert. Sollten wir aus technischen Gründen (Ausgleich des Drehmoments bei nur einem Motor) auf zwei Motoren für die Höhenregelung umsteigen, werden diese auf dem großen Carbonausleger jeweils auf einer Seite montiert. Um die Trägheit um die Gierachse zu minimieren werden die schwersten Bauteile möglichst nah am Schwer-/Drehpunkt angebracht.
 \subsection*{Motor und Motortreiber}
@@ -181,13 +134,13 @@ Das Team hat sich primär für einen Antrieb mit drei Motoren entschieden, zwei 
 \subsection*{Sensoren}
 Das IMU-Board wird, um möglichst störungsfreie Daten zu erhalten, auf der Oberseite des Ballons befestigt. Dadurch können wir die Einflüsse der Magnetfelder der Gleichstrommotoren so gering wie möglich halten. Welche Messdaten verwendet werden können, muss experimentell ermittelt werden. Im Grunde gilt, mit dem Konzept der zwei Ultraschall-Sender auf dem Ausleger lässt sich im Prinzip das IMU-Board einsparen, da es zwei Punkte der Gondel positioniert, und dadurch die Ausrichtung des Ballons auch bestimmt werden kann. Es wird trotzdem verwendet, um mehrere Daten für Höhe, Richtung und Beschleunigung zu erhalten. Des weiteren wird ein Ultraschallsensor zur Höhenmessung eingesetzt.
 \subsection*{Funkverbindung}
-Um eine Funkverbindung mit dem PC zu erhalten, wird ein XBEE-Modul verwendet. Über diese Kommunikationsverbindung werden dann die Koordinaten von der Basisstation an den Ballon übertragen. Für Tests können damit auch manuelle Steuerungen übernommen werden. Zusätzlich können vom Ballon verschiedene Statuswerte an den PC übertragen werden.
+Um eine Funkverbindung mit dem PC zu erhalten, wird ein nRF-Modul verwendet. Über diese Kommunikationsverbindung werden dann die Koordinaten von der Basisstation an den Ballon übertragen. Für Tests können damit auch manuelle Steuerungen übernommen werden. Zusätzlich können vom Ballon verschiedene Statuswerte an den PC übertragen werden.
 \subsection*{Abwurfmechanismus}
 Als Abwurfmechanismus wird ein Transistor zum Durchbrennen eines Drahtes zum Lösen des Pakets verwendet. Die Dicke des Drahtes sowie der benötigte Strom zum Durchbrennen müssen experimentell ermittelt werden. Bei Erreichen der Koordinaten der Abwurfstelle wird die Software im Arduino einen Transistor ansteuern, der dann den dünnen Draht kurzschließt und ihn somit durchbrennt. Dadurch wird das Paket abgeworfen.
 \subsection*{Stromversorgung}
 Der Akku wird aus zwei Zellen in Serie mit jeweils 3,7V, also insgesamt 7,4V, bestehen. Die Motoren sowie die Ultraschallsender können mit dieser Spannung umgehen. Für die restliche Elektronik werden noch entsprechende Spannungswandler (Schaltregler) für die Spannungen 5V und 3,3V benötigt.
 \subsection*{Navigation und Wegfindung}
-Aufbauend auf den Positionsdaten des IPS wird auf der Basisstation der optimale Weg durch den Hindernisparcours berechnet. Dieser optimale Weg besteht voraussichtlich aus Kreissegmenten in einem Sicherheitsabstand um die Hindernisse, welche tangential von Hindernis zu Hindernis verbunden werden.
+Aufbauend auf den Positionsdaten des IPS wird auf der Basisstation der optimale Weg durch den Hindernisparcours berechnet. Um Kollisionen mit den Hindernissen zu vermeiden wird ein Sicherheitsabstand um die Hindernisse festgelegt, welcher ungefähr dem doppelten Ballonradius entspricht. Die vollständige Flugroute des Luftschiffes im Slalom um die Hindernisse ergibt sich dann aus Kreissegmenten dieser Radien, welche tangential miteinander verbunden werden.
 
 
 Der Wegfindungsalgorithmus wird bei Flugbegin zunächst einmalig ausgeführt und erzeugt Wegpunkte, welche der Gondel übermittelt werden und von der Regelungssoftware auf der Gondel weiter verarbeitet werden. Der Flug der Gondel wird laufend von der Basisstation auf Kursabweichungen überprüft. Für den Fall dass die Gondel das Ziel verfehlt und somit ein Toleranzwert für das Einhalten des vorgegebenen Kurses überschritten wird, wird der Wegfindungsalgorithmus erneut ausgeführt und die neuen Wegpunkte der Gondel übermittelt.
@@ -195,7 +148,7 @@ Der Wegfindungsalgorithmus wird bei Flugbegin zunächst einmalig ausgeführt und
 
 Zur Veranschaulichung der laufenden Prozesse der Navigationssoftware, der Position der Gondel sowie dem Zustand des IPS-Systems soll eine graphische Oberfläche verwendet werden. In der dargestellten Karte werden Hindernisse und spezielle Wegpunkte (z. B. Abwurfort, Ziel) per Eingabe festgelegt. Für Notfälle soll auch eine manuelle Steuerung in die Software integriert werden.
 \subsection*{Regelung}
-Alle zur Regelung notwendigen Berechnungen werden vom auf der Gondel installierten Arduino-Board übernommen. Es werden lediglich die aktuellen Positionsdaten und die Position des nächsten Wegpunktes an die Gondel übermittelt. Zur Vereinfachung der Berechnungen auf der Gondel werden die Koordinaten vorher auf der Basisstation von einem globalen Koordinatensystem  auf das lokale Koordinatensystem der Gondel umgerechnet. Zur Höhenregelung wird ein Ultraschallsensor verwendet, der die Höhe des Ballons ermittelt. Ein entsprechender Höhenregelungsalgorithmus wird direkt auf dem Arduino implementiert.
+Alle zur Regelung notwendigen Berechnungen werden vom auf der Gondel installierten Arduino-Board übernommen. Es werden lediglich die aktuellen Positionsdaten und die Position des nächsten Wegpunktes an die Gondel übermittelt. Zur Vereinfachung der Berechnungen auf der Gondel werden die Koordinaten vorher auf der Basisstation von einem globalen Koordinatensystem mit festem Ursprung in der Bodenstation auf das lokale Koordinatensystem der Gondel, dessen Ursprung  im Luftschiff liegt, umgerechnet. Zur Höhenregelung wird ebenfalls das IPS verwendet. Sollten jedoch die Höhenmessdaten des IPS zu unzuverlässig sein, wird ein Ultraschallsensor verwendet, der die Höhe des Ballons ermittelt. Eine weitere Methode zur Höhenmessung bietet sich in der Luftdruckmessung des IMU-Boards, welche jedoch starken, zufälligen Schwankungen unterliegen kann.\\ Ein entsprechender Höhenregelungsalgorithmus wird direkt auf dem Arduino implementiert.
 
 
 Bei der Erstellung der Regelung muss darauf geachtet werden, dass das Regelungssystem Umwelteinflüsse wie Zugluft, Druckänderung sowie das durch den einzelnen Höhenregelungsmotor auftretende Drehmoment ausgleichen kann. Weiterhin muss vor allem die Höhenregelung auf den Verlust von ca.1g Gewicht durch Abwurf des Paketes während des Fluges ausgelegt sein.
@@ -230,7 +183,7 @@ XBEE:	\>\>	\>\>		20\\
 Motorentreiber:	\>\>\>\>	10\\
 Propeller:		\>\>\>\>	4\\
 Carbonstangen:	\>\>\>\>	6\\
-Kleber:	\>\>	\>\>		5\\
+Kleber:	\>\>	\>\>		vorhanden\\
 Kabel/Lackdraht:\>\>\>\>	vorhanden\\
 Arduino-Board:	\>\>\>\>	vorhanden\\
 ==================================\\
@@ -243,7 +196,7 @@ Für die Motoren und Propeller sind hier bereits Ersatzteile im Preis einkalkuli
 Das wichtigste Abbruchkriterium ist das Überschreiten eines geplanten Zeitplans des Arbeitspakets. In dem Fall muss sich das ganze Team auf das Arbeitspaket konzentrieren und daran mitarbeiten. Da es im Team Personen gibt, die im Bereich Informationsverarbeitung Anfänger sind, ist eine realistische Planung vom Zeitaufwand der Arbeitspakete riskant, es müssen eventuell während des Projekts Änderungen vorgenommen werden. Die Evaluation der Meilensteine findet in gemeinsamen Treffen statt, jeweils direkt nach der Deadline des Arbeitspakets.
 
 
-Ein weiteres Risiko besteht darin, dass die Resourcen nicht vorhanden sind, eventuell nicht zeitig geliefert werden können. Dies kann durch Umplanen und direktem Erscheinen in den Läden korrigiert werden. Der Beschädigung der einzelnen Bauteile wird durch sorgfältiges Einlesen und Informieren so gut wie möglich vorgebeugt.
+Ein weiteres Risiko besteht darin, dass die Resourcen nicht vorhanden sind, eventuell nicht zeitig geliefert werden können. Dies kann durch Umplanen und direktem Erscheinen in den Läden korrigiert werden. Der Beschädigung der einzelnen Bauteile soll durch sorgfältiges Einlesen und Informieren so gut wie möglich vorgebeugt werden.
 
 
 Hinzu kommt noch, dass bei jedem Arbeitspaket Komplikationen auftreten können, wie z.B. Fehler bei der Programmierung, unvorhergesehene Störungen in der Hardware, konzeptionelle Fehler. In diesen Fällen muss das Team gemeinsam jeweils die bestmögliche Alternative finden (mögliche Risiken: Reichweite des IPS, Fehler im Code, Zwei Punkte-Positionierung des Ballons nicht genau genug, Umwelteinflüsse unberechenbar, Komplikationen mit der Wegberechnung, nicht richtig funktionierendes IPS).
