@@ -1,4 +1,3 @@
-#include <serial
 #include <SPI.h>
 #include <Mirf.h>
 #include <nRF24L01.h>
@@ -6,9 +5,11 @@
 
 // NRF24 settings
 #define RFADDR "rec1"
+#define RFBASE "rec0"
 #define RFCHANNEL 3
 
 #define TADDR "t1"
+#define TBASE "t0"
 
 //besser als digitalWrite
 #define CLR(x,y) (x&=(~(1<<y)))
@@ -17,7 +18,7 @@
 byte Nummer[4]; 
 
 void setup() {
-  Serial.begin(115200);
+  //Serial.begin(115200);
   //init NRF24
   Mirf.spi = &MirfHardwareSpi;
   Mirf.cePin = 9;
@@ -34,10 +35,12 @@ void setup() {
 
 
 void loop(){
-  
-  Nummer[1] = serial.read();
-  
+  Mirf.getData(Nummer);
+  if(Nummer[1] > 6)
+    Nummer[1] = 0;
+  Nummer[1] = Nummer[1] + 1;
   Mirf.send(Nummer);
+  
   Serial.println(Nummer[1]);
   
 }
