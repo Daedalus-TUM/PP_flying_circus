@@ -2,15 +2,62 @@
 #include <Mirf.h>
 #include <nRF24L01.h>
 #include <MirfHardwareSpiDriver.h>
+#include <stdio.h>
+#include <stdlib.h>
 
 // NRF24 settings
 #define RFADDR "Base"
-#define RFCHANNEL 15
+#define RFCHANNEL 30
 
-byte Nummer[4];
-byte Rec[4];
-byte check1;
-byte check2;
+//data arrays to be sent and received
+float waypoint[3] = {0};
+float rec_data[3] = {0};
+
+//checks and states and inputs
+float check1;
+int state = 1;
+char menu;
+byte count;
+
+//timer used in the ack process: timeout restarts sending process
+unsigned long timer = 0;
+unsigned long interval = 2000;
+
+//pointers to the data arrays
+byte *sendbytes = (byte*)waypoint;
+byte *recbytes = (byte*)rec_data;
+
+//===================================//
+
+// send and repeat data until the answer returns
+// save return data in array rec_data, recdata[0] != 2 signals correct exchange
+void consend(float data[3])
+{
+  rec_data[0] = 2;
+  
+  Mirf.send(sendbytes);
+  while(Mirf.isSending()){
+  }
+    
+  Serial.println("Sending...");
+  
+  timer = millis();
+  
+  //wait for ack for "interval" amount of ms
+  while(rec_data[0] == 2 && ((millis() - timer) < interval))
+  {
+    if(Mirf.dataReady())
+    {
+      Mirf.getData(recbytes);
+      Serial.println("Received Ack");
+    }
+  }
+  //if no ack, restart transmission
+  if(rec_data[0] == 2)
+    consend(data);
+}
+
+//=========================//
 
 void setup()
 {
@@ -21,88 +68,90 @@ void setup()
   Mirf.csnPin = 10;
   Mirf.init();
   Mirf.setRADDR((byte *)RFADDR);
-  Mirf.payload = 4;
+  Mirf.payload = 12;
   Mirf.channel = RFCHANNEL;
   Mirf.config();
   
-  Nummer[0] = 0;
-  Nummer[1] = 4;
-  Nummer[2] = 8;
-  Nummer[3] = 12;
-  
-  Rec[0] = 0;
-  Rec[1] = 0;
-  Rec[2] = 0;
-  Rec[3] = 0;
 }
 
-
-// send and repeat data until ack
-// save ack data in array ack, ack[0] != 2 signals correct exchange
-void consend(byte data[4])
-{
-  byte ack[4] = {0};
-  ack[0] = 2;
-  
-    
-  Mirf.send(data);
-  while(Mirf.isSending()){
-  }
-    
-  Serial.println("Sending...");
-  
-  if(Mirf.dataReady())
-  {
-    Mirf.getData(ack);
-    Serial.println("Received Ack");
-  }
-}
-
-
+//==========================//
 
 void loop()
 {
-  
-  // read char from console:
+  switch (state)
+  {
+    case 0: //initialize coordinates
+      waypoint[0] = 0;
+      waypoint[1] = 0;
+      waypoint[2] = 0;
+      count = 0;
+      state = 1;
+      break;
+      
+    case 1: //receive data from serial input
+      
+      while(waypoint[2] == 0)
+      {
+        while(waypoint[count]!=0)
+        {
+          count++;
+        }
         if (Serial.available() > 0) 
         {
-                // read the incoming byte:
-                Nummer[0] = Serial.read();
-
-                // say what you got:
-                Serial.println("I send: ");
-                
-                Serial.print(Nummer[0], DEC);
-                Serial.print(" ");
-                Serial.print(Nummer[1], DEC);
-                Serial.print(" ");
-                Serial.print(Nummer[2], DEC);
-                Serial.print(" ");
-                Serial.println(Nummer[3], DEC);
+          waypoint[count] = Serial.parseFloat();
+          Serial.print(count+1);
+          Serial.print(". Koordinate ist: ");
+          Serial.print(waypoint[count]);
+          Serial.println(" ");
         }
-        
-  //send char
-  if(Nummer[0] != check1)
-    consend(Nummer);
+      }
+      
+      state = 2;  
+      break;
     
-  //receive without ack
-  if(Mirf.dataReady())
-  {
-    Mirf.getData(Rec);
-    if(Rec[0]!=check2)
-    {
+    case 2: //communicate
+      
+      menu = 0;
+      waypoint[0]++;
+      
+      Serial.println("Data sent:");
+      Serial.print(waypoint[0]);
+      Serial.print(" ");
+      Serial.print(waypoint[1]);
+      Serial.print(" ");
+      Serial.print(waypoint[2]);
+      Serial.println();
+      
+      
+      //send char and receive answer
+      consend(waypoint);
+        
+      //print received answer to serial
+      
       Serial.println("Received:");
-      for(int i=0; i<4; i++)
+      for(int i=0; i<3; i++)
       {
-        Serial.print(Rec[i]);
+        Serial.print(rec_data[i]);
         Serial.print(" ");
       }
       Serial.println();
-    }
+      Serial.println();
+      
+      
+      //input q to leave this state and get new coordinates
+      if (Serial.available() > 0)
+      {
+        menu = Serial.read();
+      }
+      if(menu == 'q')
+      {
+        state = 0;
+      }
+      
+      break;
+     
   }
-  Nummer[0] = check1;
-  Rec[0] = check2;
-  delay(500);
+  delay(1000);
 }
   
   

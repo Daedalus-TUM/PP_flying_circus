@@ -5,15 +5,23 @@
 
 // NRF24 settings
 #define RFADDR "Bloon"
-#define RFCHANNEL 15
+#define RFCHANNEL 30
 
-//besser als digitalWrite
-#define CLR(x,y) (x&=(~(1<<y)))
-#define SET(x,y) (x|=(1<<y))
+//data arrays to be sent and received
+float waypoint[3] = {0};
+float send_data[3] = {1};
 
-byte Nummer[4]; 
-byte ack[4] = {1};
-byte check;
+//checks
+float check;
+
+//timer used in the ack process: timeout restarts sending process
+unsigned long timer = 0;
+unsigned long interval = 2000;
+
+//pointers to the data arrays
+byte *sendbytes = (byte*)send_data;
+byte *recbytes = (byte*)waypoint;
+
 
 void setup() {
   Serial.begin(115200);
@@ -23,14 +31,9 @@ void setup() {
   Mirf.csnPin = 10;
   Mirf.init();
   Mirf.setRADDR((byte *)RFADDR);
-  Mirf.payload = 4;
+  Mirf.payload = 12;
   Mirf.channel = RFCHANNEL;
   Mirf.config();
-  
-  Nummer[0] = 0;
-  Nummer[1] = 0;
-  Nummer[2] = 0;
-  Nummer[3] = 0;
 }
 
 
@@ -38,35 +41,28 @@ void loop(){
   
   if(Mirf.dataReady())
   {
-    Mirf.getData(Nummer);
-     
-    Mirf.send(ack);
-    while(Mirf.isSending()){
-    }
-    Serial.println("Ack sent");
-  }
-  
-  delay(500);
-  
-  if(check != Nummer[0])
-  {
-    Serial.print(Nummer[0], DEC);
-    Serial.print(" ");
-    Serial.print(Nummer[1], DEC);
-    Serial.print(" ");
-    Serial.print(Nummer[2], DEC);
-    Serial.print(" ");
-    Serial.println(Nummer[3], DEC);
-          
-    Mirf.send(Nummer);
-    while(Mirf.isSending()){
-    }
+    Mirf.getData(recbytes);
     
-    Serial.println("Data sent");
+    //return part of incoming message as communication test
+    send_data[2] = waypoint[0];
+     
+    Mirf.send(sendbytes);
+    while(Mirf.isSending()){
+    }
+    Serial.println("Answer sent");
+  
+    Serial.println("Data received:");
+    Serial.print(waypoint[0]);
+    Serial.print(" ");
+    Serial.print(waypoint[1]);
+    Serial.print(" ");
+    Serial.print(waypoint[2]);
     Serial.println();
+    Serial.println();
+    
   }
-  check = Nummer[0];
-  delay(100);
+  check = waypoint[0];
+  delay(200);
 }
   
   
