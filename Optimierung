@@ -1,0 +1,119 @@
+/*
+Meine Idee war es die zwei ips koordinaten zu nehmen die der computer bekommt z.B. P1[x,y,z] ist der linke und P2[] der rechte US sender
+und wenn der abstand der beiden punkte nicht die auslegerlänge ist dann den fehler zu halbieren und die punkte zusammen- oder auseinander-
+schieben. damit sollte die präzision der koordinate deutlich erhöht werden.
+
+**/
+double Optimierung(double P1[2],P2[2]){
+
+	double Abstand;
+	double Auslegerlänge;
+	double Steigung;
+	double delx;
+	double dely;
+	double delta;
+	double Pmitte[2];
+	
+	//double P1[2]=P1x,P1y,P1z;
+	
+Abstand = sqrt(	(P1[0]-P2[0])*(P1[0]-P2[0])	+	(P1[1]-P2[1])*(P1[1]-P2[1]) );
+delta = |Abstand - Auslegerlänge|;
+
+Steigung = (P1[1]-P2[1])/(P1[0]-P2[0]);
+
+delx = sqrt (	((delta*delta)/4)	/	(1+(Steigung*Steigung))	);
+
+dely = Steigung *delx;
+
+if(Abstand > Auslegerlänge){
+
+	if(P1[0]<=P2[0]){
+
+		if(P1[1]<=P2[1]){
+			P1[0]= P1[0] + delx;
+			P2[0]= P2[0] - delx;
+			P1[1]= P1[1] + dely;
+			P2[1]= P2[1] - dely;
+			Pmitte[0] = (P2[0] - P1[0])/2;
+			Pmitte[1] = (P2[1] - P1[1])/2;
+		}
+		else{
+			P1[0]= P1[0] + delx;
+			P2[0]= P2[0] - delx;
+			P1[1]= P1[1] - dely;
+			P2[1]= P2[1] + dely;
+			Pmitte[0] = (P2[0] - P1[0])/2;
+			Pmitte[1] = (P1[1] - P2[1])/2;
+		}
+	
+	}
+	else{
+
+		if(P1[1]<=P2[1]){
+			P1[0]= P1[0] - delx;
+			P2[0]= P2[0] + delx;
+			P1[1]= P1[1] + dely;
+			P2[1]= P2[1] - dely;
+			Pmitte[0] = (P1[0] - P2[0])/2;
+			Pmitte[1] = (P1[1] - P2[1])/2;
+		}
+		else{
+			P1[0]= P1[0] - delx;
+			P2[0]= P2[0] + delx;
+			P1[1]= P1[1] - dely;
+			P2[1]= P2[1] + dely;
+			Pmitte[0] = (P1[0] - P2[0])/2;
+			Pmitte[1] = (P2[1] - P1[1])/2;
+		}
+
+	}
+}
+else{
+	if(P1[0]<=P2[0]){
+
+		if(P1[1]<=P2[1]){
+			P1[0]= P1[0] - delx;
+			P2[0]= P2[0] + delx;
+			P1[1]= P1[1] - dely;
+			P2[1]= P2[1] + dely;
+			Pmitte[0] = (P2[0] - P1[0])/2;
+			Pmitte[1] = (P2[1] - P1[1])/2;
+		}
+		else{
+			P1[0]= P1[0] - delx;
+			P2[0]= P2[0] + delx;
+			P1[1]= P1[1] + dely;
+			P2[1]= P2[1] - dely;
+			Pmitte[0] = (P2[0] - P1[0])/2;
+			Pmitte[1] = (P1[1] - P2[1])/2;
+		}
+	
+	}
+	else{
+
+		if(P1[1]<=P2[1]){
+			P1[0]= P1[0] + delx;
+			P2[0]= P2[0] - delx;
+			P1[1]= P1[1] - dely;
+			P2[1]= P2[1] + dely;
+			Pmitte[0] = (P1[0] - P2[0])/2;
+			Pmitte[1] = (P1[1] - P2[1])/2;
+		}
+		else{
+			P1[0]= P1[0] + delx;
+			P2[0]= P2[0] - delx;
+			P1[1]= P1[1] + dely;
+			P2[1]= P2[1] - dely;
+			Pmitte[0] = (P1[0] - P2[0])/2;
+			Pmitte[1] = (P2[1] - P1[1])/2;
+		}
+
+	}
+
+
+
+}
+
+return Pmitte[];
+
+}
