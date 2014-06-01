@@ -1,0 +1,17 @@
+
+
+Funk und IPS
+================================
+
+
+Funk:
+
+Die Funkverbindung wurde mithilfe der NRF24-Funkmodule implementiert und erwies sich in zahlreichen Tests als zuverlässig. Zum Test wurden mehrere Testprogramme erstellt, die die Übertragung von Daten in Byte-Feldern wahlweise als Byte, Integer oder Float interpretieren.
+
+Zur Verwendung mit dem IPS wird die Funkverbindung für die Übertragung von drei Integerwerten eingestellt. Hierfür ist zwar nur eine Paketgröße von 6 Byte erforderlich, jedoch werden, um sich dem bestehenden Funkprotokoll des IPS anzupassen, ein Paket von 12 Byte übermittelt. Somit kann für den gesamten Funkverkehr mit den Bodenstationen und der Gondel eine Bodenstation verwendet werden.
+
+
+IPS:
+
+Das IPS wurde auf die Verwendung zweier Ultraschallsender angepasst. Durch die Übertragung eines Signals von der Gondel zum Zeitpunkt der Erzeugung des Ultraschallsignals wird dem Rechner die Zuordnung der eintreffenden Daten ermöglicht. Durch Mittelung beider Werte kann schließlich die Position und Orientierung der Gondel ermittelt werden.
+
