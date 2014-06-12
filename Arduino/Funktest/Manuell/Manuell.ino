@@ -8,13 +8,14 @@
 // NRF24 settings
 #define RFADDR "Base"
 #define RFCHANNEL 30
+#define PAYLOAD 5
 
 /*data arrays to be sent and received
 float waypoint[3] = {0};
 float rec_data[3] = {0};
 */
-byte sending[4] = {1};
-byte receiving[4] = {0};
+byte sending[PAYLOAD] = {1};
+byte receiving[PAYLOAD] = {0};
 //checks and states and inputs
 float check1;
 int state = 0;
@@ -33,9 +34,9 @@ byte *recbytes = (byte*)rec_data;
 
 // send and repeat data until the answer returns
 // save return data in array rec_data, recdata[0] != 2 signals correct exchange
-void consend(byte data[4])
+void consend(byte data[PAYLOAD])
 {
-  receiving[0] = 2;
+  receiving[3] = 2;
   
   Mirf.send(data);
   while(Mirf.isSending()){
@@ -46,7 +47,7 @@ void consend(byte data[4])
   timer = millis();
   
   //wait for ack for "interval" amount of ms
-  while(receiving[0] == 2 && ((millis() - timer) < interval))
+  while(receiving[3] == 2 && ((millis() - timer) < interval))
   {
     if(Mirf.dataReady())
     {
@@ -55,7 +56,7 @@ void consend(byte data[4])
     }
   }
   //if no ack, restart transmission
-  if(receiving[0] == 2)
+  if(receiving[3] == 2)
     consend(data);
 }
 
@@ -70,7 +71,7 @@ void setup()
   Mirf.csnPin = 10;
   Mirf.init();
   Mirf.setRADDR((byte *)RFADDR);
-  Mirf.payload = 4;
+  Mirf.payload = PAYLOAD;
   Mirf.channel = RFCHANNEL;
   Mirf.config();
   
@@ -83,10 +84,21 @@ void loop()
   switch (state)
   {
     case 0: //initialize coordinates
+
+      Serial.println("Waehrend des Betriebs sind die folgenden Werte mit 'Enter' einzugeben:");
+      Serial.println("Q, W, E: erhoehen die Werte des linken, mittleren und rechten Motors");
+      Serial.println("A, S, D: senken die Werte des linken, mittleren und rechten Motors");
+      Serial.println("F        setzt alle Motoren auf Null.");
+      Serial.println("R        Return zu diesem Menu");
+      Serial.println("X        wirft Paket ab");
+      Serial.println();
+      Serial.println("Bitte Startwerte eingeben");
+          
       sending[0] = 1;
       sending[1] = 1;
       sending[2] = 1;
       sending[3] = 1;
+      sending[4] = 0;
       count = 0;
       state = 1;
       break;
@@ -103,7 +115,7 @@ void loop()
         {
           sending[count] = Serial.parseInt();
           Serial.print(count+1);
-          Serial.print(". Koordinate ist: ");
+          Serial.print(". Wert ist: ");
           Serial.print(sending[count]);
           Serial.println(" ");
           
@@ -125,6 +137,8 @@ void loop()
       Serial.print(sending[2]);
       Serial.print(" ");
       Serial.print(sending[3]);
+      Serial.print(" ");
+      Serial.print(sending[4]);
       Serial.println();
       
       
@@ -134,29 +148,65 @@ void loop()
       //print received answer to serial
       
       Serial.println("Received:");
-      for(int i=0; i<4; i++)
+      for(int i=0; i<5; i++)
       {
         Serial.print(receiving[i]);
-        Serial.print(" ");
+        Serial.print("  ");
       }
       Serial.println();
       Serial.println();
       
       
-      //input q to leave this state and get new coordinates
+      //input r to leave this state and get new coordinates
+      //
       if (Serial.available() > 0)
       {
         menu = Serial.read();
       }
       if(menu == 'q')
       {
+        sending[0] = sending[0] + 10;
+      }
+      if(menu == 'a')
+      {
+        sending[0] = sending[0] - 10;
+      }
+      if(menu == 'w')
+      {
+        sending[2] = sending[2] + 10;
+      }
+      if(menu == 's')
+      {
+        sending[2] = sending[2] - 10;
+      }
+      if(menu == 'e')
+      {
+        sending[1] = sending[1] + 10;
+      }
+      if(menu == 'd')
+      {
+        sending[1] = sending[1] - 10;
+      }
+      if(menu == 'r')
+      {
         state = 0;
+      }
+      if(menu == 'x')
+      {
+        sending[4] = 1;
+      }
+      if(menu == 'f')
+      {
+        sending[0] =0;
+        sending[1] =0;
+        sending[2] =0;
+        sending[4] =0;
       }
       
       break;
      
   }
-  delay(1000);
+  delay(500);
 }
   
   
