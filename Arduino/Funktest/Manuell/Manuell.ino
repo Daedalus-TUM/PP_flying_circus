@@ -8,7 +8,7 @@
 // NRF24 settings
 #define RFADDR "Base"
 #define RFCHANNEL 30
-#define PAYLOAD 5
+#define PAYLOAD 12
 
 /*data arrays to be sent and received
 float waypoint[3] = {0};
@@ -36,7 +36,7 @@ byte *recbytes = (byte*)rec_data;
 // save return data in array rec_data, recdata[0] != 2 signals correct exchange
 void consend(byte data[PAYLOAD])
 {
-  receiving[3] = 2;
+  //receiving[3] = 2;
   
   Mirf.send(data);
   while(Mirf.isSending()){
@@ -44,9 +44,9 @@ void consend(byte data[PAYLOAD])
     
   Serial.println("Sending...");
   
-  timer = millis();
+  //timer = millis();
   
-  //wait for ack for "interval" amount of ms
+  /*wait for ack for "interval" amount of ms
   while(receiving[3] == 2 && ((millis() - timer) < interval))
   {
     if(Mirf.dataReady())
@@ -55,9 +55,9 @@ void consend(byte data[PAYLOAD])
       Serial.println("Received Ack");
     }
   }
-  //if no ack, restart transmission
-  if(receiving[3] == 2)
-    consend(data);
+  *///if no ack, restart transmission
+  //if(receiving[3] == 2)
+  //consend(data);
 }
 
 //=========================//
@@ -94,13 +94,15 @@ void loop()
       Serial.println();
       Serial.println("Bitte Startwerte eingeben");
           
-      sending[0] = 1;
-      sending[1] = 1;
-      sending[2] = 1;
-      sending[3] = 1;
+      sending[0] = 0;
+      sending[1] = 0;
+      sending[2] = 0;
+      sending[3] = 0;
       sending[4] = 0;
+      sending[5] = 0;
+      sending[6] = 0;
       count = 0;
-      state = 1;
+      state = 2;
       break;
       
     case 1: //receive data from serial input
@@ -130,15 +132,15 @@ void loop()
       menu = 0;
       
       Serial.println("Data sent:");
-      Serial.print(sending[0]);
-      Serial.print(" ");
-      Serial.print(sending[1]);
-      Serial.print(" ");
       Serial.print(sending[2]);
       Serial.print(" ");
       Serial.print(sending[3]);
       Serial.print(" ");
       Serial.print(sending[4]);
+      Serial.print(" ");
+      Serial.print(sending[5]);
+      Serial.print(" ");
+      Serial.print(sending[6]);
       Serial.println();
       
       
@@ -165,29 +167,37 @@ void loop()
       }
       if(menu == 'q')
       {
-        sending[0] = sending[0] + 10;
+        sending[2] = sending[2] + 10;
       }
       if(menu == 'a')
       {
-        sending[0] = sending[0] - 10;
+        sending[2] = sending[2] - 10;
       }
       if(menu == 'w')
       {
-        sending[2] = sending[2] + 10;
+        sending[3] = sending[3] + 10;
       }
       if(menu == 's')
       {
-        sending[2] = sending[2] - 10;
+        sending[3] = sending[3] - 10;
       }
       if(menu == 'e')
       {
-        sending[1] = sending[1] + 10;
+        sending[4] = sending[4] + 10;
       }
       if(menu == 'd')
       {
-        sending[1] = sending[1] - 10;
+        sending[4] = sending[4] - 10;
       }
       if(menu == 'r')
+      {
+        sending[5] = sending[5] + 10;
+      }
+      if(menu == 'f')
+      {
+        sending[5] = sending[5] - 10;
+      }
+      if(menu == 't')
       {
         state = 0;
       }
@@ -195,12 +205,16 @@ void loop()
       {
         sending[4] = 1;
       }
-      if(menu == 'f')
+      if(menu == 'g')
       {
-        sending[0] =0;
+        sending[0] =30;
         sending[1] =0;
         sending[2] =0;
         sending[4] =0;
+        sending[5] =0;
+        sending[6] =0;
+        sending[7] =0;
+        sending[8] =0;
       }
       
       break;
